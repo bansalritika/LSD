@@ -1,16 +1,3 @@
 # LSD
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Many individuals experience anxiety or panic attacks but may struggle to document and understand their occurrences adequately. Existing methods often lack specificity, merely noting the event's happening without delving into crucial details such as symptoms, triggers, and control measures. This deficiency impedes users ability to gain self-awareness, track progress, and identify patterns, ultimately hindering effective management of their condition. To address this, there is a need for a comprehensive reporting system that prompts users to provide detailed information about their anxiety or panic attacks, empowering them to gain insights, receive personalized support, and access tailored interventions.
