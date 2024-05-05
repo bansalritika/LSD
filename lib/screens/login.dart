@@ -21,14 +21,8 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset("assets/images/image.png"),
-                Text(
-                  "Welcome to login",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize:30.0,
-                    ),
-                  ),
+               
+                Image.asset("assets/images/image.png", height: 243, width: 291, fit: BoxFit.fitHeight,),
                   Container(
                     padding: EdgeInsets.fromLTRB(10, 0,10, 0),
                     decoration: BoxDecoration(
