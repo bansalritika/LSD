@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
     
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.all(20),
         color: Color.fromRGBO(246, 246, 246, 1),
         child: SafeArea(
           child:Form(
@@ -18,12 +19,16 @@ class LoginScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(15),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                
                 Image.asset("assets/images/image.png", height: 243, width: 291, fit: BoxFit.fitHeight,),
+                SizedBox(height: 15,),
                   Container(
+                    height: 47,
+                    width: 320,
                     padding: EdgeInsets.fromLTRB(10, 0,10, 0),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(255, 255, 255, 1),
@@ -49,6 +54,8 @@ class LoginScreen extends StatelessWidget {
                   ),
 
                   Container(
+                    height: 47,
+                    width: 320,
                     padding: EdgeInsets.fromLTRB(10, 0,10, 0),
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(255, 255, 255, 1),
@@ -56,15 +63,26 @@ class LoginScreen extends StatelessWidget {
                       ),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.face,
-                          color: Color.fromRGBO(187, 187, 187, 1),
-                        ),
+                        icon: Icon(Icons.lock),
+                        suffixIcon: Icon(Icons.remove_red_eye),
+                        // suffixIcon: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   children: <Widget>[
+                        //     IconButton(icon: Icon(Icons.clear)),
+                        //     IconButton(onPressed: _authBloc.switchObscureTextMode, icon: Icon(snapshot.data ? Icons.visibility: Icons.visibility_off))
+
+                        //   ],
+                        // ) Icon(
+                        //   Icons.password,
+                          
+                        //   color: Color.fromRGBO(187, 187, 187, 1),
+                        // ),
                         labelStyle: TextStyle(
                           color: Color.fromRGBO(187, 187, 187, 1),
                         ),
                         border: InputBorder.none,
-                        labelText: "Username / Phone number", 
+                        labelText: "Password",
                      ),
                   )
                   ),
