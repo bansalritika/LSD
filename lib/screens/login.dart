@@ -19,6 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  void navigateToForgetPassword(){
+    //navigation logic here
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,14 +107,21 @@ class _LoginScreenState extends State<LoginScreen> {
                      ),
                   )
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(200, 4,0, 0),
+                  SizedBox(height: 5,),
+                  GestureDetector(
+                    onDoubleTap: navigateToForgetPassword,
+                    child: Container(
+                      width: 320,
+                      padding: EdgeInsets.only(left: 200),
+                      child: Text("Forget Password",
+                      style: TextStyle(
+                        color: Color.fromRGBO(165, 165, 165, 1),
+                        //decoration: TextDecoration.underline
 
-  
-                    child: Text("Forget Password", style: TextStyle(
-                      color: Color.fromRGBO(165, 165, 165, 1),
-                    ),),
+                      ),),
+                    ),
                   ),
+                  
                   SizedBox(
                     height: 5,
                   ),
