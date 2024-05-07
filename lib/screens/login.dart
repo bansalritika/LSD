@@ -1,12 +1,23 @@
-import 'dart:js_util';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-class LoginScreen extends StatelessWidget {
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+class LoginScreen extends StatefulWidget{
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
   GlobalKey _form = GlobalKey();
+  bool _isPasswordVisible = false;
+
+  void tooglePasswordVisibility(){
+    setState((){
+      _isPasswordVisible = !_isPasswordVisible;
+
+    });
+  }
 
 
   @override
@@ -69,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                     child: TextFormField(
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        suffixIcon: IconButton(onPressed: tooglePasswordVisibility, icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off)),
                         // suffixIcon: Row(
                         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         //   mainAxisSize: MainAxisSize.min,
@@ -161,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                   Expanded(
                   child: Divider(
                     indent: 10.0,
-                    endIndent: 28.0,
+                    endIndent: 20.0,
                     thickness: 1,
                   )
                   ),
@@ -169,120 +180,80 @@ class LoginScreen extends StatelessWidget {
                  ),
                  SizedBox(height: 5,),
                   
-                Row(children: [
-                  Container(
-                     //color:  Color.fromRGBO(255, 255, 255, 1),
-
-                    child: Row(children: [
-                      //Image.asset("assets/images/image.png", height: 40,width: 40,),
-                      ElevatedButton(
+                 Row(
+                  children: [
+                    SizedBox(width: 15,),
+                    ElevatedButton(
                     
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
                                               
-
-
-                        textStyle: const TextStyle(
-                      
-                        //backgroundColor: Color.fromARGB(255, 248, 245, 245),
-                          fontSize: 10,
-                          fontFamily: 'Nunito Sans',
-                        ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
+                          borderRadius: BorderRadius.circular(20),
+                          
+                          //side: BorderSide(color: Color.fromARGB(a, r, g, b))
                         )
                      
                       ),
                       
-                      child: Text("Google", textAlign: TextAlign.center,
-                        style: TextStyle(
-                          
-                        color: Color.fromRGBO(105, 105, 105, 1), 
-                        fontSize: 16.0, fontStyle: FontStyle.normal,
-                        ), 
-                       ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.google,
+                            color: Color.fromRGBO(105, 105, 105, 1),
+                          ),
+                          SizedBox(width: 10,),
+                          Text("Google",
+                          style: TextStyle(
+                            color: Color.fromRGBO(105, 105, 105, 1),
+                            fontFamily: "Nunito Sans",
+                            fontSize: 16.0,
+                          ),)
+                        ],
+                      )
                   ),
-                  SizedBox(width: 100,),
+                  SizedBox(width: 20,),
+                  
                   ElevatedButton(
                     
+                    
                       onPressed: () {},
+                      
                       style: ElevatedButton.styleFrom(
-                                              
-
-
-                        textStyle: const TextStyle(
-                      
-                        //backgroundColor: Color.fromARGB(255, 248, 245, 245),
-                          fontSize: 10,
-                          fontFamily: 'Nunito Sans',
-                        ),
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                        
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                        )
-                     
+                          borderRadius: BorderRadius.circular(20),
+                          //side: BorderSide(color: Color.fromRGBO(105,105, 105, 1), width: 1),
+                          ),                     
                       ),
-                      
-                      child: Text("Facebook", textAlign: TextAlign.center,
-                        style: TextStyle(
-                          
-                        color: Color.fromRGBO(105, 105, 105, 1), 
-                        fontSize: 16.0, fontStyle: FontStyle.normal,
-                        ), 
-                       ),
-                  ),
-                    ],),
-//                     child: ElevatedButton.icon(
-//     onPressed: (){
-//       print("You pressed Icon Elevated Button");
-//     },
-//     Image.asset("assets/images/image.png", height: 243, width: 291, fit: BoxFit.fitHeight,), 
-//     icon: Icon(Icons.inbox),  //icon data for elevated button
-//     label: Text("Google"), //label text 
-// )
-                  ),
-                  // Container(
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.facebook,
+                            color: Color.fromRGBO(105, 105, 105, 1),
+                            ),
+                          SizedBox(width: 10,),
+                          Text("Facebook",
+                          style: TextStyle(
+                            color: Color.fromRGBO(105, 105, 105, 1),
+                            fontFamily: "Nunito Sans",
+                            fontSize: 16.0,
+                          ),)
+                        ],
+                      ),),
+                    
                 
-                    
-                  //   height: 47,
-                  //   width: 152,
-                  //   child: ElevatedButton(
-                    
-                  //     onPressed: () {},
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-                                              
+                  ],
+                 ),
+//                   
+                
+                
 
-
-                  //       textStyle: const TextStyle(
-                      
-                  //       //backgroundColor: Color.fromARGB(255, 248, 245, 245),
-                  //         fontSize: 10,
-                  //         fontFamily: 'Nunito Sans',
-                  //       ),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(20)
-                  //       )
-                     
-                  //     ),
-                      
-                  //     child: Text("Google", textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                          
-                  //       color: Color.fromRGBO(105, 105, 105, 1), 
-                  //       fontSize: 16.0, fontStyle: FontStyle.normal,
-                  //       ), 
-                  //      ),
-                  // ),
-                  // ),
-                  // const Spacer(flex:1),
-                  // Container(
-                  //   height: 47,
-                  //   width: 152,
-                  //   color: Colors.white,
-                  // )
-                ],),
-
-                SizedBox(height: 2,),
+                SizedBox(height: 8,),
 
                 Row(
                   children: <Widget>[
@@ -294,13 +265,12 @@ class LoginScreen extends StatelessWidget {
                       )
                     ),       
 
-                  Text("Don't have an account yet",
+                  Text("Don't have an account yet ?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                  color: Color(0xFFACACAC),
+                  color: Color.fromRGBO(172, 172, 172, 1),
                   fontSize: 12,
                   fontFamily: 'Nunito Sans',
-                  fontWeight: FontWeight.w600,
                   height: 0.14,
             ),),        
 
@@ -313,22 +283,38 @@ class LoginScreen extends StatelessWidget {
                   ),
                   ]
                  ),
-                 Column(
+                 SizedBox(height: 4,),
+                 Row(
                   
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
-                  children: [Text("Sign up", textAlign: TextAlign.center,)]
+                  children: [
+                  TextButton(onPressed: (){}, 
+                  child: Text(
+                    "Sign up", 
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "Nunito Sans",
+                      color: Color.fromRGBO(100, 100, 100, 1)
+                    ),),)]
+                  //TextButton(onPressed: {}, child: const Text("Sign Up"))]
+
+                  
                   
                  )
                   
-                ],
-            ),
+                
+              ],
             ),
           ),
           
-        ),        
-      ),
-    );
+        ),
+        ),
+        ),
+        );      
+      
+    
   }
 }
+
