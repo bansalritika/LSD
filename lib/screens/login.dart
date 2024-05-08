@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; 
 class LoginScreen extends StatefulWidget{
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -327,6 +329,51 @@ class _LoginScreenState extends State<LoginScreen> {
         );      
       
     
+  }
+}
+
+
+
+
+
+void loginUser(String username, String password) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/login'), // Change the URL as per your server
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
+    if (response.statusCode == 200) {
+      // Server ne token return kiya hai
+      // Ab aap token ko use kar sakte hain
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final String token = responseData['token'];
+      // Ab aap token ko use kar sakte hain, for example, use token to navigate to home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+    } else {
+      // Kuch error hai, for example, invalid credentials
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final String errorMessage = responseData['message'];
+      // Display error message to user
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(errorMessage),
+        duration: Duration(seconds: 3),
+      ));
+    }
+  } catch (error) {
+    // Network error hai
+    // Display network error message to user
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Network error occurred'),
+      duration: Duration(seconds: 3),
+    ));
   }
 }
 
