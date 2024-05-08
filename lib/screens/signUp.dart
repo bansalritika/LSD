@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lsd/screens/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -279,7 +280,7 @@ class _SignUpState extends State<SignUp> {
               thickness: 1,
             )),
             Text(
-              'Or',
+              'Already have an account?',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xFFACACAC),
@@ -298,6 +299,51 @@ class _SignUpState extends State<SignUp> {
           ]),
           const SizedBox(
             height: 5,
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+            ),
+            child: const Text(
+              "Log In",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: "Nunito Sans",
+                  color: Color.fromRGBO(100, 100, 100, 1)),
+            ),
+          ),
+
+          const SizedBox(
+            height: 8,
+          ),
+          const Row(children: <Widget>[
+            Expanded(
+                child: Divider(
+              indent: 15.0,
+              endIndent: 10.0,
+              thickness: 1,
+            )),
+            Text(
+              "Or",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromRGBO(172, 172, 172, 1),
+                fontSize: 12,
+                fontFamily: 'Nunito Sans',
+                height: 0.14,
+              ),
+            ),
+            Expanded(
+                child: Divider(
+              indent: 10.0,
+              endIndent: 28.0,
+              thickness: 1,
+            )),
+          ]),
+          const SizedBox(
+            height: 4,
           ),
 
           Padding(
@@ -335,61 +381,8 @@ class _SignUpState extends State<SignUp> {
                 )),
           ),
           const SizedBox(
-            width: 20,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Row(children: <Widget>[
-            Expanded(
-                child: Divider(
-              indent: 15.0,
-              endIndent: 10.0,
-              thickness: 1,
-            )),
-            Text(
-              "Don't have an account yet ?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromRGBO(172, 172, 172, 1),
-                fontSize: 12,
-                fontFamily: 'Nunito Sans',
-                height: 0.14,
-              ),
-            ),
-            Expanded(
-                child: Divider(
-              indent: 10.0,
-              endIndent: 28.0,
-              thickness: 1,
-            )),
-          ]),
-          const SizedBox(
             height: 4,
           ),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const SignUp(),
-                    ),
-                  ),
-                  child: const Text(
-                    "Log In",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: "Nunito Sans",
-                        color: Color.fromRGBO(100, 100, 100, 1)),
-                  ),
-                )
-              ]
-              //TextButton(onPressed: {}, child: const Text("Sign Up"))]
-
-              ),
         ]),
       ),
     );
