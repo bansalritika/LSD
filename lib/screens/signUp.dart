@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lsd/screens/signUp.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpState extends State<SignUp> {
   GlobalKey _form = GlobalKey();
   // final _formKey = GlobalKey<FormState>();
   final _emailaddress = TextEditingController();
@@ -45,6 +46,35 @@ class _LoginScreenState extends State<LoginScreen> {
             height: Height * 0.5,
             width: Width * 0.8,
             fit: BoxFit.fitHeight,
+          ),
+          SizedBox(
+            height: Height * 0.01,
+          ),
+          ListTile(
+            title: TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _fullname,
+              decoration: InputDecoration(
+                icon: const Icon(
+                  Icons.face,
+                  color: Color.fromRGBO(187, 187, 187, 1),
+                ),
+                labelStyle: const TextStyle(
+                  fontFamily: 'Nunito Sans',
+                  color: Color.fromRGBO(187, 187, 187, 1),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: const BorderSide(),
+                ),
+                labelText: "Full Name",
+              ),
+              onSaved: (value) {
+                setState(() {
+                  fullname = value!;
+                });
+              },
+            ),
           ),
           SizedBox(
             height: Height * 0.01,
@@ -227,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
                 child: const Text(
-                  "Login",
+                  "SignUp",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 1),
@@ -349,7 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child: const Text(
-                    "Sign up",
+                    "Log In",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: "Nunito Sans",
