@@ -4,7 +4,6 @@ import 'package:lsd/screens/signUp.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -15,7 +14,6 @@ class _LoginScreenState extends State<LoginScreen> {
   // final _formKey = GlobalKey<FormState>();
   final _emailaddress = TextEditingController();
   final _password = TextEditingController();
-  final _fullname = TextEditingController();
 
   String email = '';
   String password = '';
@@ -32,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToForgetPassword() {
     //navigation logic here
   }
- void loginUser(String username, String password) async {
+  void loginUser(String username, String password) async {
     try {
       final response = await http.post(
         Uri.parse('http://localhost:3000/login'),
@@ -61,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ));
     }
   }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.sizeOf(context);

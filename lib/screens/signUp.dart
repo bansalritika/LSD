@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lsd/screens/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -302,7 +303,7 @@ class _SignUpState extends State<SignUp> {
           TextButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const SignUp(),
+                builder: (context) => LoginScreen(),
               ),
             ),
             child: const Text(
