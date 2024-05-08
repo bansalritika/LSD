@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lsd/screens/signUp.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,7 +32,35 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToForgetPassword() {
     //navigation logic here
   }
-
+ void loginUser(String username, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/login'),
+        body: {
+          'username': username,
+          'password': password,
+        },
+      );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final String token = responseData['token'];
+        // Token ko use karne ka logic yahaan likhein
+        // For example, SharedPreferences mein token ko store karein
+      } else {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final String errorMessage = responseData['message'];
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(errorMessage),
+          duration: Duration(seconds: 3),
+        ));
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Network error occurred'),
+        duration: Duration(seconds: 3),
+      ));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.sizeOf(context);
