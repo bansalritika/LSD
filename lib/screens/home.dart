@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(246, 246, 246, 10),
         body: Column(children: [
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -63,7 +63,160 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ))
             ],
-          )
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Text(
+            "Hello! ${/*add backend for username @ritika*/ ""}",
+            style: TextStyle(
+              fontSize: 28,
+              fontFamily: 'Nunito Sans',
+              color: Colors.grey[700],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                  height: Height * 0.2,
+                  width: Width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromRGBO(68, 118, 126, 1),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(68, 118, 126, 1),
+                          blurRadius: 10.0,
+                          spreadRadius: 2.0,
+                          offset: Offset(0.0, 5.0),
+                        )
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Detail Incident \nReport",
+                        style: TextStyle(
+                          fontFamily: 'Nunito Sans',
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        child: Image(
+                          image: AssetImage("assets/images/iconNext.png"),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                  height: Height * 0.15,
+                  width: Width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromRGBO(144, 177, 183, 1),
+                    // boxShadow: const [
+                    //   BoxShadow(
+                    //     color: Color.fromRGBO(68, 118, 126, 1),
+                    //     blurRadius: 10.0,
+                    //     spreadRadius: 2.0,
+                    //     offset: Offset(0.0, 5.0),
+                    //   )]
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Scheduled check \ninstruction",
+                        style: TextStyle(
+                          fontFamily: 'Nunito Sans',
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        child: const Image(
+                          image: AssetImage("assets/images/report.png"),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                  height: Height * 0.1,
+                  width: Width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromRGBO(112, 146, 163, 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Emotional \nJournaling",
+                        style: TextStyle(
+                          fontFamily: 'Nunito Sans',
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        width: 40,
+                        child: Image(
+                          image: AssetImage("assets/images/journaling.png"),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(28, 0, 28, 0),
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                  height: Height * 0.1,
+                  width: Width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromRGBO(140, 186, 193, 1),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: Width * 0.4),
+                        child: const Text(
+                          "Real time \nMonitoring",
+                          style: TextStyle(
+                            fontFamily: 'Nunito Sans',
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+          ),
         ]));
   }
 }
