@@ -93,10 +93,10 @@ class HomeScreen extends StatelessWidget {
                           offset: Offset(0.0, 5.0),
                         )
                       ]),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
+                      Text(
                         "Detail Incident \nReport",
                         style: TextStyle(
                           fontFamily: 'Nunito Sans',
@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 40,
                         width: 40,
                         child: Image(
@@ -133,10 +133,10 @@ class HomeScreen extends StatelessWidget {
                     //     offset: Offset(0.0, 5.0),
                     //   )]
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
+                      Text(
                         "Scheduled check \ninstruction",
                         style: TextStyle(
                           fontFamily: 'Nunito Sans',
@@ -144,10 +144,10 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 40,
                         width: 40,
-                        child: const Image(
+                        child: Image(
                           image: AssetImage("assets/images/report.png"),
                         ),
                       ),
@@ -166,10 +166,10 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: const Color.fromRGBO(112, 146, 163, 1),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
+                      Text(
                         "Emotional \nJournaling",
                         style: TextStyle(
                           fontFamily: 'Nunito Sans',
@@ -177,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 40,
                         width: 40,
                         child: Image(
