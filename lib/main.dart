@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './screens/login.dart';
+import 'package:lsd/screens/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: const Color.fromARGB(0, 234, 10, 204),
-      ),
-      home: LoginScreen(),
+      theme: ThemeData(useMaterial3: true),
+      home: Dashboard(),
       debugShowCheckedModeBanner: false,
     );
   }
