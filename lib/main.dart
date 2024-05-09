@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lsd/screens/login.dart'; // Import your login screen file here
+import './screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color.fromARGB(0, 234, 10, 204),
       ),
-      home: LoginScreen(), // Set the login screen as the initial screen
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/login': (context) => LoginScreen(), // Route for the login screen
