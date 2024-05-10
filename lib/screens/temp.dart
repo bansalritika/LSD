@@ -1,3 +1,5 @@
+import 'package:background_sms/background_sms.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lsd/screens/login.dart';
@@ -26,6 +28,64 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       _isPasswordVisible = !_isPasswordVisible;
     });
+  }
+
+  void _signUpUser(String username, String email, String password) async {
+    print("hii");
+
+    try {
+      if (!RegExp(
+              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$")
+          .hasMatch(email)) {
+        throw Exception('Please enter a valid email address.');
+      }
+      final response =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      print(response);
+      // 4. Handle successful signup (optional)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sign up successful!'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      Navigator.of(context).pushReplacementNamed('/home');
+    } on FirebaseAuthException catch (error) {
+      String message = 'An error occurred during sign up. $error';
+      switch (error.code) {
+        case 'weak-password':
+          message = 'The password provided is too weak.';
+          break;
+        case 'email-already-in-use':
+          message = 'The email address is already in use by another account.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is invalid.';
+          break;
+        default:
+          // Handle other potential errors gracefully
+          break;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (error) {
+      // Handle unexpected errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred. Please try again.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   void navigateToForgetPassword() {
@@ -245,8 +305,9 @@ class _SignUpState extends State<SignUp> {
             child: SizedBox(
               height: Height * 0.05,
               child: ElevatedButton(
-                onPressed: () {
-                  //yaha aayega code
+                onPressed: () async {
+                  _signUpUser(
+                      _fullname.text, _emailaddress.text, _password.text);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(36, 92, 102, 1),

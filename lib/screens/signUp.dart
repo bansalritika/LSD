@@ -1,9 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-// ignore: unused_import
-import 'package:lsd/screens/api.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -15,6 +11,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _isPasswordVisible = false;
 
@@ -26,29 +24,62 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _signUpUser(String username, String email, String password) async {
     try {
-      final response = await http.post(
-        Uri.parse('http://localhost:3000/signup'),
-        body: {
-          'username': username,
-          'email': email,
-          'password': password,
-        },
-      );
-      if (response.statusCode == 201) {
-        // Sign up successful, handle navigation accordingly
-      } else {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        final String errorMessage = responseData['message'];
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(errorMessage),
-          duration: Duration(seconds: 3),
-        ));
+      if (username.isEmpty || email.isEmpty || password.isEmpty) {
+        throw Exception('Please fill in all fields.');
       }
+
+      if (!RegExp(
+              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$")
+          .hasMatch(email)) {
+        throw Exception('Please enter a valid email address.');
+      }
+      final response =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      print(response);
+      // 4. Handle successful signup (optional)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sign up successful!'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      // Navigator.of(context).pushReplacementNamed('/home');
+    } on FirebaseAuthException catch (error) {
+      print(error);
+      String message = 'An error occurred during sign up.  $error';
+      switch (error.code) {
+        case 'weak-password':
+          message = 'The password provided is too weak.';
+          break;
+        case 'email-already-in-use':
+          message = 'The email address is already in use by another account.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is invalid.';
+          break;
+        default:
+          // Handle other potential errors gracefully
+          break;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Network error occurred'),
-        duration: Duration(seconds: 3),
-      ));
+      // Handle unexpected errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred. Please try again.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 
@@ -78,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          // padding: EdgeInsets.all(16.0),
+          // padding: EdgeInsets.all(16.0), // Add padding if desired
           children: [
             Image.asset(
               "assets/images/image.png",
@@ -101,31 +132,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
               ),
             ),
-            SizedBox(height: 16.0),
             TextFormField(
-              controller: _passwordController,
+              controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  }, // Change _togglePasswordVisibility to _isPasswordVisible
-                ),
+                labelText: 'Email',
               ),
-              obscureText: !_isPasswordVisible,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Password cannot be empty!';
-                }
-                return null;
-              },
             ),
             SizedBox(height: 16.0),
             TextFormField(
@@ -145,10 +156,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
               ),
-              obscureText: !_isPasswordVisible,
+              obscureText: _isPasswordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Password cannot be empty!';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              controller: _confirmPasswordController,
+              decoration: InputDecoration(
+                labelText: 'Confirm Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                ),
+              ),
+              obscureText: !_isPasswordVisible,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Confirm Password cannot be empty!';
+                } else if (value != _passwordController.text) {
+                  return 'Passwords do not match!';
                 }
                 return null;
               },
@@ -159,7 +198,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 if (_formKey.currentState!.validate()) {
                   _signUpUser(
                     _fullNameController.text,
-                    _emailController.text,
+                    _emailController
+                        .text, // Assuming you have an email controller
                     _passwordController.text,
                   );
                 }
