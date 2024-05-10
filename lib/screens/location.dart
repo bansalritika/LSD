@@ -1,30 +1,27 @@
-import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-class SendSms extends StatefulWidget {
-  const SendSms({super.key});
+class LocationPage extends StatefulWidget {
+  const LocationPage({super.key});
 
   @override
-  State<SendSms> createState() => _SendSmsState();
+  State<LocationPage> createState() => _LocationPageState();
 }
 
-class _SendSmsState extends State<SendSms> {
+class _LocationPageState extends State<LocationPage> {
   String? _currentAddress;
-
   Position? _currentPosition;
-
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       setState(() => _currentPosition = position);
     }).catchError((e) {
       debugPrint(e);
     });
   }
-
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -32,8 +29,7 @@ class _SendSmsState extends State<SendSms> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
+          content: Text('Location services are disabled. Please enable the services')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -47,38 +43,31 @@ class _SendSmsState extends State<SendSms> {
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
     return true;
   }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getCurrentPosition();
-    _handleLocationPermission();
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<String> number = ['9729574967', '9523137146'];
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Send Sms"),
-      ),
-      body: ElevatedButton(
-        onPressed: () async {
-          for (int i = 0; i < number.length; i++) {
-            SmsStatus res = await BackgroundSms.sendMessage(
-                phoneNumber: number[i],
-                message:
-                    'lat ${_currentPosition?.latitude}    log ${_currentPosition?.latitude}');
-          }
-        },
-        child: Text("Send Sms"),
+      appBar: AppBar(title: const Text("Location Page")),
+      body: SafeArea(
+        child: Center(
+          child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('LAT: ${_currentPosition?.latitude ?? ""}'),
+            Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+            Text('ADDRESS: ${_currentAddress ?? ""}'),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _getCurrentPosition,
+              child: const Text("Get Current Location"),
+            )
+          ],
+        ),
+        ),
       ),
     );
   }
