@@ -70,7 +70,8 @@ class _SendSmsState extends State<SendSms> {
         onPressed: () async {
           for(int i = 0 ; i<number.length;i++) {
             SmsStatus res = await BackgroundSms.sendMessage(
-                phoneNumber: number[i], message: 'Hii Ajay , \nEmergency! I need help urgently. My current location is https://www.google.com/maps?q=${_currentPosition?.latitude},${_currentPosition?.latitude} \n. Please send assistance immediately. Also, attaching a sound recording for better understanding of the situation. Please act fast. Thank you.');
+                phoneNumber: number[i], message: 'Hii Ajay \nEmergency! I need help urgently. My current location is https://www.google.com/maps?q=${_currentPosition?.latitude},${_currentPosition?.longitude}');
+           print(res);
           }
         },
         child: Text("Send Sms"),
