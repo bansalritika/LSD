@@ -1,7 +1,9 @@
+import 'package:background_sms/background_sms.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lsd/screens/login.dart';
+import 'package:sms_flutter/flutter_sms.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -30,6 +32,7 @@ class _SignUpState extends State<SignUp> {
   }
   void _signUpUser(String username, String email, String password) async {
     print("hii");
+
     try {
       if (!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$").hasMatch(email)) {
         throw Exception('Please enter a valid email address.');
@@ -299,7 +302,7 @@ class _SignUpState extends State<SignUp> {
             child: SizedBox(
               height: Height * 0.05,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                  _signUpUser(_fullname.text, _emailaddress.text, _password.text);
                 },
                 style: ElevatedButton.styleFrom(

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lsd/screens/signUp.dart' show SignUpScreen;
+import 'package:lsd/screens/temp.dart';
 
 import 'home.dart';
 
@@ -31,12 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToSignUp() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SignUpScreen(),
+        builder: (context) => SignUp(),
       ),
     );
   }
 
   void _loginUser(String email, String password) async {
+
+
+
     try {
       final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -108,7 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: navigateToForgetPassword,
             ),
             _LoginButton(
-              onPressed: () {
+              onPressed: () async {
+
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   _loginUser(_emailController.text, _passwordController.text);
