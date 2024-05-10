@@ -10,6 +10,7 @@ import 'package:lsd/screens/home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import './screens/login.dart';
 import 'firebase_options.dart';
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -33,7 +34,7 @@ Future<void> setupFlutterNotifications() async {
     'high_importance_channel', // id
     'High Importance Notifications', // title
     description:
-    'This channel is used for important notifications.', // description
+        'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
 
@@ -45,7 +46,7 @@ Future<void> setupFlutterNotifications() async {
   /// default FCM channel to enable heads up notifications.
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   /// Update the iOS foreground notification presentation options to allow
@@ -84,7 +85,6 @@ void showFlutterNotification(RemoteMessage message) {
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -112,7 +112,6 @@ Future<void> main() async {
   // // await flutterLocalNotificationsPlugin
   // //     .createNotificationChannels([channel]);
 
-
   runApp(const MyApp());
 }
 
@@ -124,7 +123,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Future<void> _requestPermission() async {
     if (!await Permission.notification.isGranted) {
       final status = await Permission.notification.request();
@@ -140,22 +138,25 @@ class _MyAppState extends State<MyApp> {
     _getDeviceToken();
     // ... other initialization code
   }
+
   Future<void> _getDeviceToken() async {
-  var token1 =  await FirebaseMessaging.instance.getToken().then((token) {
+    var token1 = await FirebaseMessaging.instance.getToken().then((token) {
       if (token != null) {
         print('Device Token: $token');
       }
     });
-  print('Token ================= $token1');
+    print('Token ================= $token1');
   }
+
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
       if (message != null) {
         _handleNotification(message);
       }
     });
-
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       _handleNotification(message);
@@ -172,10 +173,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: const Color.fromARGB(0, 234, 10, 204),
       ),
-      home: FirebaseAuth.instance.currentUser==null?const SendSms():const HomeScreen(),
+      home: FirebaseAuth.instance.currentUser == null
+          ? const SendSms()
+          : const HomeScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/login': (context) => const LoginScreen(), // Route for the login screen
+        '/login': (context) =>
+            const LoginScreen(), // Route for the login screen
       },
     );
   }
@@ -185,6 +189,4 @@ class _MyAppState extends State<MyApp> {
     final data = message.data;
     showFlutterNotification(message);
   }
-
-
 }
