@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -10,7 +11,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _isPasswordVisible = false;
 
@@ -26,10 +28,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         throw Exception('Please fill in all fields.');
       }
 
-      if (!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$").hasMatch(email)) {
+      if (!RegExp(
+              r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$")
+          .hasMatch(email)) {
         throw Exception('Please enter a valid email address.');
       }
-      final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final response =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -44,7 +49,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       // Navigator.of(context).pushReplacementNamed('/home');
-
     } on FirebaseAuthException catch (error) {
       print(error);
       String message = 'An error occurred during sign up.  $error';
@@ -59,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           message = 'The email address is invalid.';
           break;
         default:
-        // Handle other potential errors gracefully
+          // Handle other potential errors gracefully
           break;
       }
       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +82,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
     }
   }
-
 
 // ElevatedButton(
 //   onPressed: () {
@@ -142,7 +145,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 labelText: 'Password',
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                   ),
                   onPressed: () {
                     setState(() {
@@ -151,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
               ),
-              obscureText: !_isPasswordVisible,
+              obscureText: _isPasswordVisible,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Password cannot be empty!';
@@ -166,7 +171,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 labelText: 'Confirm Password',
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                   ),
                   onPressed: () {
                     setState(() {
@@ -191,7 +198,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 if (_formKey.currentState!.validate()) {
                   _signUpUser(
                     _fullNameController.text,
-                    _emailController.text, // Assuming you have an email controller
+                    _emailController
+                        .text, // Assuming you have an email controller
                     _passwordController.text,
                   );
                 }

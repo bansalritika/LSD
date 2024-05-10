@@ -1,13 +1,10 @@
-import 'package:background_sms/background_sms.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:lsd/screens/SendSMs.dart';
-import 'package:lsd/screens/home.dart';
-import 'package:lsd/screens/location.dart';
+import 'package:lsd/screens/dashboard.dart';
 import 'package:permission_handler/permission_handler.dart';
 import './screens/login.dart';
 import 'firebase_options.dart';
@@ -175,8 +172,8 @@ class _MyAppState extends State<MyApp> {
         primaryColor: const Color.fromARGB(0, 234, 10, 204),
       ),
       home: FirebaseAuth.instance.currentUser == null
-          ? const SendSms()
-          : const HomeScreen(),
+          ? const LoginScreen()
+          : const Dashboard(),
       debugShowCheckedModeBanner: false,
       routes: {
         '/login': (context) =>

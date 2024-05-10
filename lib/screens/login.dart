@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lsd/screens/dashboard.dart';
 import 'package:lsd/screens/signUp.dart' show SignUpScreen;
 import 'package:lsd/screens/temp.dart';
 
@@ -38,11 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _loginUser(String email, String password) async {
-
-
-
     try {
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -55,8 +54,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeScreen(),)); // Example navigation
-
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      )); // Example navigation
     } on FirebaseAuthException catch (error) {
       String message = 'An error occurred during login. $error';
       switch (error.code) {
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
           message = 'The email address is invalid.';
           break;
         default:
-        // Handle other potential errors gracefully
+          // Handle other potential errors gracefully
           break;
       }
       ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -113,19 +112,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             _LoginButton(
               onPressed: () async {
-
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   _loginUser(_emailController.text, _passwordController.text);
                 }
               },
             ),
-            // _OrSeparator(),
-            // _GoogleButton(),
-            // _CustomDivider(),
-            _SignUpButton(
-              onPressed: navigateToSignUp,
-            ),
+            _OrSeparator(),
+            _GoogleButton(),
+            _CustomDivider(),
+            _SignUpButton(),
           ],
         ),
       ),
@@ -378,14 +374,16 @@ class _GoogleButton extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  _SignUpButton({required this.onPressed});
-
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Dashboard(),
+          ),
+        );
+      },
       child: const Text(
         "Sign up",
         textAlign: TextAlign.center,
@@ -397,4 +395,3 @@ class _SignUpButton extends StatelessWidget {
     );
   }
 }
-
