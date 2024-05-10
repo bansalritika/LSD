@@ -63,7 +63,7 @@ class _SendSmsState extends State<SendSms> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> number = ['6203172968','9523137146'];
+    List<String> number = ['9523137146'];
     return Scaffold(
       appBar: AppBar(title: Text("Send Sms"),),
       body: ElevatedButton(
@@ -71,6 +71,7 @@ class _SendSmsState extends State<SendSms> {
           for(int i = 0 ; i<number.length;i++) {
             SmsStatus res = await BackgroundSms.sendMessage(
                 phoneNumber: number[i], message: 'Hell , I am Ajay \nEmergency! I need help urgently. My current location is https://www.google.com/maps?q=${_currentPosition?.latitude},${_currentPosition?.latitude}.\n Please send assistance immediately. Also, attaching a sound recording for better understanding of the situation. Please act fast. Thank you.');
+           print(res);
           }
         },
         child: Text("Send Sms"),
