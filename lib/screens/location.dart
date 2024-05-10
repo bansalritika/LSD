@@ -1,18 +1,16 @@
-import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-class SendSms extends StatefulWidget {
-  const SendSms({super.key});
+
+class LocationPage extends StatefulWidget {
+  const LocationPage({super.key});
 
   @override
-  State<SendSms> createState() => _SendSmsState();
+  State<LocationPage> createState() => _LocationPageState();
 }
 
-class _SendSmsState extends State<SendSms> {
+class _LocationPageState extends State<LocationPage> {
   String? _currentAddress;
-
   Position? _currentPosition;
-
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
@@ -24,8 +22,6 @@ class _SendSmsState extends State<SendSms> {
       debugPrint(e);
     });
   }
-
-
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -52,28 +48,26 @@ class _SendSmsState extends State<SendSms> {
     }
     return true;
   }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getCurrentPosition();
-    _handleLocationPermission();
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<String> number = ['6203172968','9523137146'];
     return Scaffold(
-      appBar: AppBar(title: Text("Send Sms"),),
-      body: ElevatedButton(
-        onPressed: () async {
-          for(int i = 0 ; i<number.length;i++) {
-            SmsStatus res = await BackgroundSms.sendMessage(
-                phoneNumber: number[i], message: 'lat ${_currentPosition?.latitude}    log ${_currentPosition?.latitude}');
-          }
-        },
-        child: Text("Send Sms"),
+      appBar: AppBar(title: const Text("Location Page")),
+      body: SafeArea(
+        child: Center(
+          child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('LAT: ${_currentPosition?.latitude ?? ""}'),
+            Text('LNG: ${_currentPosition?.longitude ?? ""}'),
+            Text('ADDRESS: ${_currentAddress ?? ""}'),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _getCurrentPosition,
+              child: const Text("Get Current Location"),
+            )
+          ],
+        ),
+        ),
       ),
     );
   }

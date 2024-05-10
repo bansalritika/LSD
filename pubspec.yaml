@@ -48,6 +48,8 @@ dependencies:
   sms_flutter:
     path: D:\App Dev By Me\sms_flutter
   background_sms: ^0.0.4
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
 
 
 
