@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lsd/screens/home.dart';
+import 'package:lsd/screens/temp.dart';
 import './screens/login.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -14,11 +22,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color.fromARGB(0, 234, 10, 204),
       ),
-      home: LoginScreen(),
+      home: FirebaseAuth.instance.currentUser==null?const LoginScreen():const HomeScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/login': (context) => LoginScreen(), // Route for the login screen
-        // Add routes for other screens here, e.g., '/home': (context) => HomeScreen(),
+        '/login': (context) => const LoginScreen(), // Route for the login screen
       },
     );
   }
