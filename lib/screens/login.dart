@@ -25,13 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // navigation logic here
   }
 
-  void navigateToSignUp() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => SignUpScreen(),
-      ),
-    );
-  }
+  void navigateToSignUp() {}
 
   void _loginUser(String email, String password) {
     // login logic here
@@ -69,7 +63,13 @@ class _LoginScreenState extends State<LoginScreen> {
             // _GoogleButton(),
             // _CustomDivider(),
             _SignUpButton(
-              onPressed: navigateToSignUp,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SignUpScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -93,7 +93,7 @@ class _ImageWidget extends StatelessWidget {
 class _EmailInputWidget extends StatelessWidget {
   final TextEditingController controller;
 
-  _EmailInputWidget({required this.controller});
+  const _EmailInputWidget({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class _PasswordInputWidget extends StatelessWidget {
   final bool isPasswordVisible;
   final VoidCallback onTogglePasswordVisibility;
 
-  _PasswordInputWidget({
+  const _PasswordInputWidget({
     required this.controller,
     required this.isPasswordVisible,
     required this.onTogglePasswordVisibility,
@@ -171,7 +171,7 @@ class _PasswordInputWidget extends StatelessWidget {
 class _ForgetPasswordButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  _ForgetPasswordButton({required this.onPressed});
+  const _ForgetPasswordButton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +194,7 @@ class _ForgetPasswordButton extends StatelessWidget {
 class _LoginButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  _LoginButton({required this.onPressed});
+  const _LoginButton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +325,7 @@ class _GoogleButton extends StatelessWidget {
 class _SignUpButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  _SignUpButton({required this.onPressed});
+  const _SignUpButton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -360,7 +360,6 @@ class _SignUpButton extends StatelessWidget {
 //   final _passwordController = TextEditingController();
 //   bool _isPasswordVisible = false;
 
-
 //   void tooglePasswordVisibility() {
 //     setState(() {
 //       _isPasswordVisible = !_isPasswordVisible;
@@ -372,13 +371,6 @@ class _SignUpButton extends StatelessWidget {
 //   }
 
 
-//   void navigateToSignUp() {
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (context) => SignUp(),
-//       ),
-//     );
-//   }
 
 // @override
 //   Widget build(BuildContext context) {
