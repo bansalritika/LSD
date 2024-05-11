@@ -1,4 +1,6 @@
+import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Emergency extends StatefulWidget {
   const Emergency({super.key});
@@ -10,8 +12,61 @@ class Emergency extends StatefulWidget {
 class _EmergencyState extends State<Emergency> {
   bool notify = true;
 
+  String? _currentAddress;
+
+  Position? _currentPosition;
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getCurrentPosition();
+    _handleLocationPermission();
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> number = ['6203172968', '9523137146'];
     var screenSize = MediaQuery.sizeOf(context);
     var Width = screenSize.width;
     var Height = screenSize.height;
@@ -258,7 +313,15 @@ class _EmergencyState extends State<Emergency> {
                               )
                             ]),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            for (int i = 0; i < number.length; i++) {
+                              SmsStatus res = await BackgroundSms.sendMessage(
+                                  phoneNumber: number[i],
+                                  message:
+                                      'Hii  \nEmergency! I need help urgently. My current location is https://www.google.com/maps?q=${_currentPosition?.latitude},${_currentPosition?.longitude}');
+                              print(res);
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             shadowColor: Colors.white,
                             elevation: 50,

@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(246, 246, 246, 10),
         body: Column(children: [
           const SizedBox(
-            height: 20,
+            height: 70,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

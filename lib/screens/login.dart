@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lsd/screens/dashboard.dart';
 import 'package:lsd/screens/signUp.dart' show SignUpScreen;
+import 'package:lsd/screens/temp.dart';
+
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,10 +30,68 @@ class _LoginScreenState extends State<LoginScreen> {
     // navigation logic here
   }
 
+<<<<<<< HEAD
   void navigateToSignUp() {}
+=======
+  void navigateToSignUp() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SignUp(),
+      ),
+    );
+  }
+>>>>>>> a8d33976d92fad598132fa4a51245c40dd221d99
 
-  void _loginUser(String email, String password) {
-    // login logic here
+  void _loginUser(String email, String password) async {
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Handle successful login (optional)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login successful!'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      )); // Example navigation
+    } on FirebaseAuthException catch (error) {
+      String message = 'An error occurred during login. $error';
+      switch (error.code) {
+        case 'user-not-found':
+          message = 'The email address is not associated with an account.';
+          break;
+        case 'wrong-password':
+          message = 'The password is invalid.';
+          break;
+        case 'invalid-email':
+          message = 'The email address is invalid.';
+          break;
+        default:
+          // Handle other potential errors gracefully
+          break;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (error) {
+      // Handle unexpected errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred. Please try again.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   @override
@@ -52,13 +115,14 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: navigateToForgetPassword,
             ),
             _LoginButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   _loginUser(_emailController.text, _passwordController.text);
                 }
               },
             ),
+<<<<<<< HEAD
             // _OrSeparator(),
             // _GoogleButton(),
             // _CustomDivider(),
@@ -71,6 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               },
             ),
+=======
+            _OrSeparator(),
+            _GoogleButton(),
+            _CustomDivider(),
+            _SignUpButton(),
+>>>>>>> a8d33976d92fad598132fa4a51245c40dd221d99
           ],
         ),
       ),
@@ -323,14 +393,23 @@ class _GoogleButton extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
+<<<<<<< HEAD
   final VoidCallback onPressed;
 
   const _SignUpButton({required this.onPressed});
 
+=======
+>>>>>>> a8d33976d92fad598132fa4a51245c40dd221d99
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Dashboard(),
+          ),
+        );
+      },
       child: const Text(
         "Sign up",
         textAlign: TextAlign.center,
@@ -342,6 +421,7 @@ class _SignUpButton extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 // import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -670,3 +750,5 @@ class _SignUpButton extends StatelessWidget {
 //     );
 //   }
 // }
+=======
+>>>>>>> a8d33976d92fad598132fa4a51245c40dd221d99
